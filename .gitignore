@@ -1,0 +1,9 @@
+_build
+*.swp
+*.dvi
+*.bbl
+*.blg
+*.pdf
+*~
+gh-pages/
+.DS_Store

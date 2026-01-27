@@ -1,0 +1,981 @@
+\section{Lattices}
+%======================================================================
+
+
+\begin{comment}
+    - semilattice
+        - def: order with infimum (meet)
+        - def: algebraic: idempotent, commutative, associative (commutative
+        semigroup)
+        - both defs are equivalent
+        - finite meet semilattices have least element: meet of all elements
+    - lattice
+        - two definitions and equivalence
+        - lattice from a finite meet semilattice with greatest element
+    - complete lattices
+        - meet semilattice
+        - complete meet semilattice is a complete lattice
+        - Knaster-Tarski
+\end{comment}
+
+% Non lattice
+\begin{tikzpicture}
+    \graph [branch right=2cm, grow up] {
+        0 [xshift=1cm]
+        -- {
+            c/$c$ -- a,
+            d -- b,
+            c -- b,
+            d -- a
+        }
+        -- 1 [xshift=1cm];
+    };
+\end{tikzpicture}
+
+The lower bounds of $\set{a,b}$ are $\set{0,c,d}$, but there is no greatest
+lower bound $a \land b$. The upper bounds of $\set{c,d}$ are $\set{a,b,1}$, but
+there is no least upper bound $c \lor d$.
+
+
+
+\begin{theorem}
+    \label{thmOneDistributivitySufficient}
+    \emph{In a lattice the distributivity of join over meet implies the
+    distributivity of meet over join (note: join and meet are dual operations,
+    therefore the other direction can be proved in the same manner).
+    }
+
+    \begin{proof}
+        Assume $x \join (y \meet z) = (x \join y) \meet (x \join z)$. We have to
+        prove $x \meet (y \join z) = (x \meet y) \join (x \meet z)$.
+
+        $$
+        \vertlist{
+            x \meet (y \join z)
+            &=&
+            (x \meet (x \join z)) \meet (y \join z)
+            & \text{absorption}
+            \\
+            &=&
+            x \meet ((x \join z) \meet (y \join z))
+            & \text{associativity}
+            \\
+            &=&
+            x \meet ((z \join x) \meet (z \join y))
+            & \text{commutativity}
+            \\
+            &=&
+            x \meet (z \join (x \meet y))
+            & \text{assumption}
+            \\
+            &=&
+            x \meet ((x \meet y) \join z)
+            & \text{commutativity}
+            \\
+            &=&
+            ((x \meet y) \join x) \meet ((x \meet y) \join z)
+            & \text{absorption}
+            \\
+            &=&
+            (x \meet y) \join (x \meet z)
+            &\text{assumption}
+        }
+        $$
+    \end{proof}
+\end{theorem}
+
+
+
+\subsection{Distributive Lattices}
+%======================================================================
+
+
+
+\subsubsection{Some Examples}
+%----------------------------------------------------------------------
+
+\begin{enumerate}
+    \item The set of natural numbers $\set{0, 1, 2, 3, \ldots}$ with the usual order
+        is a distributive lattice.
+        The join of two elements is the maximum of two elements, the meet is its
+        minimum. The lattice is not complete, because the set of all numbers has
+        no join and the meet of the empty set does not exist (the meet of the
+        empty set is greatest element and the natural numbers have no greatest
+        element).
+
+        The lattice does not have infinite descending chains, so it is a DCC
+        lattice. However it has infinitely ascending chains.
+
+
+    \item The set of natural numbers with an added top element
+        $$\set{0, 1, 2, 3, \ldots, \infty}$$
+        is a complete distributive DCC lattice.
+
+        The lattice is complete because all subsets have a meet and a join. The
+        meet of the
+        empty set is the top element $\bigjoin \emptyset = \infty$, the join of
+        a finite set is its greatest element, the join of an infinite set is the
+        top element.
+
+    \item Consider he cofinite subset lattice of the natural numbers which is
+        the set of all finite subsets of the natural numbers with the top
+        element which is the set of all numbers. The join and meet operation are
+        union and intersection.
+
+        This lattice is complete and distributive. It is complete because of the
+        top element, it is distributive because set union and intersection are
+        distributive.
+
+        The atoms of this lattice are the singleton sets $\set{0}$, $\set{1}$,
+        $\ldots$. There are infinitely many atoms therefore the width of the
+        lattice is infinite.
+
+        The lattice satisfies the descending chain condition. If you start a
+        descending chain with a finite set of natural numbers there are
+        evidently only finite steps downwards to reach the empty set. If you
+        start a descending chain at the top, the next downward element is a
+        finite set (there are no infinite sets strictly below the top element).
+        From the second element in the downward chain there are only finitely
+        many downward steps possible before reaching the bottom element (the
+        empty set).
+
+
+    \item The powerset of the set of natural numbers is a complete distributive
+        lattice as well. As in the previuos example the top element is the set
+        of all natural numbers.
+
+        However this lattice has proper infinite subsets. E.g. the set of all
+        even numbers, the set of all prime numbers, the set of all powers of a
+        certain prime number.
+
+        Interestingly this lattice does not satisfy the descending chain
+        condition. It is easy to construct an infinitely descending chain.
+        $$
+        \vertlist{
+            \set{0, 1, 2, 3, \ldots}
+            \\
+            \supset \set{1, 2, 3, \ldots}
+            \\
+            \supset \set{2, 3, \ldots}
+            \\
+            \ldots
+        }
+        $$
+        The trick is to start with an infinite set and remove at each downward
+        step one element of the set. Since removing one element of an infinite
+        set does not change its infiniteness and the descending chain never ends.
+
+    \item The divisibility lattice of the natural numbers is a complete
+        distributive DCC lattice.
+
+        The elements of the lattice are the natural number ordered by
+        divisibility. We say that $a$ divides $b$ if there is a number $n$ such
+        that $a n = b$ is valid. Not that $1$ is the least element, because $1$
+        divides all numbers ($1 b = b$) and $0$ is the top element because all
+        numbers divide 0 ($a 0 = 0$).
+\end{enumerate}
+
+
+\begin{theorem}
+    \label{thmChainsAreDistributive}
+    %--------------------------------------------------
+    \emph{All chain lattices are distributive.}
+
+    \begin{proof}
+        The join of two elements is their maximum, the meet of two elements is
+        their minimum. We have to prove
+        $$
+            max(a, min(b, c)) = min(max(a,b), max(a,c))
+        $$
+        We consider 3 cases:
+        \begin{enumerate}
+            \item $a$ is the smallest:
+                $$
+                \vertlist{
+                    max(a, min(b,c)) &=& min(b,c)
+                    \\
+                    min(max(a,b), max(a,c)) &=& min(b,c)
+                }
+                $$
+
+            \item $a$ is the greatest:
+                $$
+                \vertlist{
+                    max(a, min(b,c)) &=& a
+                    \\
+                    min(max(a,b), max(a,c)) &=& a
+                }
+                $$
+
+            \item $a$ is between $b$ and $c$:
+                \begin{enumerate}
+                    \item $b \le a \le c$:
+                    $$
+                    \vertlist{
+                        max(a, min(b,c)) &=& a
+                        \\
+                        min(max(a,b), max(a,c)) &=& a
+                    }
+                    $$
+
+                    \item $c \le a \le b$:
+                    $$
+                    \vertlist{
+                        max(a, min(b,c)) &=& a
+                        \\
+                        min(max(a,b), max(a,c)) &=& a 
+                    }
+                    $$
+                \end{enumerate}
+
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+
+
+
+\subsection{Join Irreducible Elements}
+%======================================================================
+
+
+In some lattices it is possible to find some basic elements such that all other
+elements can be generated by forming joins over the basic elements. I.e. we search
+for a set of elements $B$ such that every element $e$ of the lattice can be
+generated by $e = b_0 \join b_1 \join \ldots \join b_{n-1}$ where all $b_i \in
+B$. The basic elements $B$ are similar to the prime numbers in number theory
+where each natural number can be represented by a product of prime numbers.
+
+Prime numbers are numbers which cannot be represented as product of different
+other numbers. If a prime number $p$ is a product of the form $p = ab$, then it
+is either $a$ or $b$.
+
+In a similar manner we define join irreducible elements as elements which cannot be
+represented as a join of other elements of the lattice.
+
+
+\begin{definition}
+    % Join Irreducible
+    % ----------------
+    \label{defJoinIrreducible}
+    We give two definitions of \emph{join irreducible} elements and show that
+    both definitions are equivalent.
+
+    \begin{enumerate}
+        \item An element $q$ of a lattice $L$ is \emph{join irreducible} if it is
+            not the least element of the lattice and for all elements $a,b \in L$ we
+            have $\ruleh{q = a \join b}{q = a \lor q = b}$. I.e. if $q$ is the
+            join of two elements, then it is one of the elements.
+    
+        \item An element $q$ of a lattice $L$ is \emph{join irreducible} if for
+            all finite sets $F \subseteq L$ we have $q = \bigjoin F \implies q \in
+            F$. I.e. if $q$ is the join of finitely many elements of the
+            lattice then it is one of these elements.
+    \end{enumerate}
+
+
+    \begin{proof} We prove the equivalence of both definitions. 
+        \begin{enumerate}
+            \item First we show that a join irreducible element $q$ in the first
+                definition is also join irreducible in the second definition.
+
+                Assume that $q$ is join irreducible according to the first
+                definition and $q = \bigjoin F$ for some finite set $F$. We prove
+                that $q \in F$ by induction on the size $n$ of the set.
+
+                In the base case $F$ is the empty set. This implies that $q$ is
+                the least element of the lattice which contradicts the fact the
+                $q$ is join irreducible according to the first definition. Ex
+                falso quodlibet i.e. the claim is proved in the base case.
+
+                Assume that $q = \bigjoin F \implies q \in F$ for $|F| = n$ and
+                that $q = \bigjoin (\set{a} \cup F) = a \join (\bigjoin F)$. Since
+                $q$ is join irreducible according to the first definition we
+                have $q = a \lor q = \bigjoin F$. If $q = a$ then $q \in (\set{a}
+                \cup F)$. If $q = \bigjoin F$ then by the induction hypothesis $q
+                \in F$ and therefore $q \in (\set q \cup F)$.
+
+
+            \item Now we assume that $q$ is join irreducible according to the
+                second definition. Assume $q = a \join b$. We take $F :=
+                \set{a,b}$. Then $q \in F$ according to the second definition. So
+                $q$ is join irreducible according the first definition.
+        \end{enumerate}
+
+    \end{proof}
+\end{definition}
+
+
+
+
+\paragraph{Examples}
+%------------------------------------------------------------
+\begin{enumerate}
+    \item In a chain e.g. with numbers $\set{1,2,3,4}$ with the standard order
+        all numbers except the smallest number are join irreducible.
+        In such a linear order the join of two elements is the maximum of the
+        elements. I.e. an element can be the join of two elements only if it is
+        greater than the other. Therefore it is one of the elements.
+
+        The concept of join irreducibility in a chain is relatively boring,
+        because all elements are join irreducible and only the least one (if it
+        exists) can be represented as a join $\bigjoin \emptyset$.
+
+        Even if the chain contains limit elements, then the limit elements are join
+        irreducible as well. In an infinite chain with no least elements all
+        elements are join irreducible.
+
+    \item In a powerset lattice $\powerset{\set{a,b,c}}$ (join is union) only
+        the singleton sets $\set{a}$, $\set{b}$ and $\set{c}$ are join
+        irreducible. All other sets can be generated by joining finitely many
+        singleton sets.
+
+        The singleton sets are join irreducible, because the only join which
+        creates a singleton set is $\emptyset \cup \set a$ (or $\set{a} \cup
+        \emptyset$) and the singleton set is clearly one of the joined sets.
+
+        The other sets like $\set{a,b}$ are join reducible because we have
+        $\set{a,b} = \set{a} \cup \set{b}$.
+
+    \item Limit elements in chains are join irreducible. Consider a limit
+        element $c$ such that $c = a \join b$. In a chain the join operation
+        returns the maximum of both elements i.e. the join is the maximum of the
+        set $\set{a,b}$ and therefore one of the two elements. This is the
+        definition of a join irreducible element.
+
+    \item A limit element in general is not join irreducible. Consider the
+        lattice
+
+        \begin{tikzpicture}
+            \graph [grow up, branch right=2cm] {
+                0/$0$[xshift=1cm]
+                -- {
+                    a0/$a_0$ -- a1/$a_1$,
+                    b0/$b_0$ -- b1/$b_1$
+                }
+                --[dotted] 1/$1$[xshift=1cm];
+            };
+        \end{tikzpicture}
+
+        Note that $1 = a_i \join b_j$ and $1$ is neither $a_i$ nor $b_j$ for any
+        values of $i$ and $j$. So the limit element $1$ can be generated by a
+        join of a finite set of elements.
+\end{enumerate}
+
+
+
+
+
+\paragraph{DCC lattices}
+%----------------------------------------------------------------------
+Join irreducible elements play an important role in lattices satisfying the
+descending chain condition. All elements of such a lattice can be constructed by
+using joins of a finite set of join irreducible elements.
+
+
+\begin{theorem}
+    \label{thmDCCJoinIrreducible}
+    %-------------------------------------------------------------------------
+    \emph{If a lattice $L$ satisfies the descending chain condition (DCC), then
+    every element of $L$ is the join of finitely many join irreducible
+    elements.}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Suppose there is an element of $L$ which is not the join of
+                finitely many join irreducible elements. Because of the
+                descending chain condition there exists a minimal element $m$
+                which is not the join of finitely many join irreducibles.
+
+            \item $m$ is not join irreducible. Otherwise we would have $m =
+                \bigjoin \set{m}$ and $m$ would be the join of a finite set of
+                join irreducibles.
+
+            \item Since $m$ is not join irreducible there exist two elements $a$
+                and $b$ which are different from $m$ such that $m$ is the join
+                of these two elements $m = a \join b$. These two elements are
+                strictly below $m$.
+
+            \item $m$ is minimal in the set of elements which are not the join
+                of a finite set of join irreducibles. So $a$ and $b$, which are
+                strictly below $m$, are the join of join irreducibles. Say $a =
+                \bigjoin A$ and $b = \bigjoin B$ where $A$ and $B$ are finite
+                sets of join irreducibles. This fact implies $m = a \join b =
+                \bigjoin (A \cup B)$ and contradicts the assumption that $m$
+                is not the join of a finite set of join irreducibles.
+
+            \item Therefore an element which is not the join of a finite set of
+                join irreducibles cannot exist.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+
+The join irreducible elements of a lattice $L$ with DCC have another nice
+property. All elements of the lattice are the join of all join irreducibles
+below it.
+
+\begin{theorem}
+    \label{thmJoinOfJoinIrreduciblesBelow}
+    \emph{ Let $L$ be a lattice satisfying the descending chain condition,
+    $J(L)$ the set of all join irreducibles of $L$ and $\phi$ be the function
+    which maps all elements to the set of join irreducibles below it $\phi(a) =
+    \set{p \in J(L): p \le a}$. Then $a = \bigjoin(\phi(a))$.}
+
+    \begin{proof}
+        We prove the claim by contradiction assuming there is an element $a$
+        which is not equal to $\phi(a)$. Since the lattice satisfies DCC there
+        is a minimal element $m \ne \phi(m)$.
+
+        We have to distinguish the cases that $m$ is join irreducible or not.
+
+        \begin{enumerate}
+            \item $m$ is join irreducible:
+
+                In this case $m \in \phi(m)$ and therefore $m \le
+                \bigjoin(\phi(m))$. By definition of $\phi$ $m$ is an upper
+                bound for $\phi(m)$. Since a join is the least upper bound we
+                have $\bigjoin(\phi(m)) \le m$. So $m = \bigjoin(\phi(m)$ which
+                contradicts the assumption $m \ne \bigjoin(\phi(m))$
+
+
+            \item $m$ is not join irreducible:
+
+                In this case there exist $a,b \in L$ different from $m$ such
+                that $m = a \join b$.  Because $m$ is minimal we have $a =
+                \bigjoin(\phi(a))$ and $b = \bigjoin(\phi(b))$.
+
+                This implies $m = \bigjoin(\phi(a) \cup \phi(b))$.
+
+                We know that $a \le m$ and $b \le m$ ($m$ is the least upper
+                bound) and therefore $\phi(a) \cup \phi(b) \subseteq \phi(m)$.
+                Therefore $m \le \bigjoin(\phi(m))$.
+
+                By definition $m$ is an upperbound for $\phi(m)$ i.e.
+                $\bigjoin(\phi(m)) \le m$.
+
+                This implies $m = \bigjoin(\phi(m))$ which contradicts the
+                assumption that $m$ is not the join of all join irreducibles
+                below it.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+
+
+
+
+
+
+\subsection{Join Prime Elements}
+%================================================================================
+
+
+
+
+\paragraph{Prime property}
+%----------------------------------------------------------------------
+If a lattice is distributive
+then the join irreducibles have the prime property which says whenever a join
+irreducible element is below a join of a finite set of elements, then there
+exist an element in the finite set which is an upper bound of the join
+irreducible.
+
+In nondistributive lattices this prime property is not guaranteed. Consider the
+diamond lattice $M_3$ and the pentagon lattice $N_5$.
+
+    \tikz
+    \graph [grow up, branch right=1cm] {
+        0/$0$[xshift=1cm]
+        -- {
+            a/$a$,
+            b/$b$,
+            c/$c$
+        }
+        -- 1/$1$[xshift=1cm];
+    };
+%
+    \tikz
+    \graph [grow up, branch right=2cm] {
+        0/$0$[xshift=1cm]
+        -- {
+            a/$a$,
+            b/$b$ -- c/$c$
+        }
+        -- 1/$1$[xshift=1cm];
+    };
+
+The elements $a$ $b$ and $c$ are join irreducible. In both cases we have $c \le
+\bigjoin\set{a,b}$. The prime property would require either $c \le a$ or $c \le
+b$. None of the statements is valid.
+
+In the diamond lattice $M_3$ neither of the middle elements $a,b,c$ have the
+prime property. In the pentagon lattice $N_5$ $a$ and $b$ have the prime
+property, but $c$ does not.
+
+In distributive lattices all join irreducibles have the prime property.
+
+Let us first give a formal definition of join prime elements.
+
+\begin{definition}
+    \label{defJoinPrime}
+    %------------------------------------------------------------
+    We give 2 definitions of \emph{join prime} elements and show that both
+    definitions are equivalent.
+
+    \begin{enumerate}
+        \item An element $p$ of a lattice $L$ is \emph{join prime} if for any
+            finite set $F \subseteq L$ of elements where $p$ is below the join of
+            these elements $p \le \bigjoin F$, then there exist an element $a
+            \in F$ such that $p \le a$.
+
+        \item An element $p$ of a lattice $L$ is \emph{join prime} if it is not
+            the least element of the lattice and if for all $a,b \in L$ where
+            $p$ is below the join of the elements $p \le a \join b$ then $p$ is
+            below one of the elements i.e. $p \le a$ or $p \le b$ is satisfied.
+    \end{enumerate}
+
+    \begin{proof}
+        First we prove that the first definition implies the second and then the
+        other way round.
+
+        \begin{enumerate}
+            \item $1 \implies 2$: Assume that $p$ is join prime according to the
+                first definition.
+
+                \begin{itemize}
+                    \item $p$ is not the least element of the lattice: Assume
+                        that $p$ is the least element of the lattice. Then $p
+                        \le \bigjoin \emptyset$ because $\bigjoin \emptyset$ is
+                        the least element of the lattice. The first definition
+                        requires that there is an element $a \in \emptyset$.
+                        This is not possible, therefore $p$ cannot be the least
+                        element of the lattice.
+
+                    \item Assume $p \le a \join b$. This is equivalent to $p \le
+                        \set{a,b}$. The first definition requires that either $p
+                        \le a$ or $p \le b$ is valid.
+                \end{itemize}
+
+            \item $2 \implies 1$: Assume that $p$ is join prime according to the
+                second definition. We have to proof that for all finite sets $F
+                \subseteq L$ that $p \le \bigjoin F \implies \exists a \in F: p
+                \le a$. We prove this by induction on the size of $F$.
+
+                \begin{itemize}
+                    \item Base case $F = \emptyset$. Assume $p \le \join
+                        \emptyset$. This implies that $p$ is the least element
+                        of the lattice. This contradicts the fact that $p$ is
+                        join prime according to the first definition. Ex falso
+                        quodlibet, therefore the claim is valid in the base
+                        case.
+
+                    \item Induction step: Assume that the claim is valid for $F$
+                        and $p \le \bigjoin(\set{a} \cup F)$. This is equivalent
+                        to $p \le a \join (\bigjoin F)$. The second definition
+                        requires that $p \le a$ or $p \le \bigjoin F$.
+
+                        In the first case we have already found an element $a$ in
+                        $\set{a} \cup F$ such that $p \le a$.
+
+                        In the second case the induction hypothesis guarantees
+                        an element $a \in F$ such that $p \le a$.
+                \end{itemize}
+        \end{enumerate}
+    \end{proof}
+\end{definition}
+
+
+
+The property of being join prime is stronger than the property of being join
+irreducible.
+
+\begin{theorem}
+    \emph{In an arbitrary lattice $L$ all join prime elements are join
+    irreducible.}
+
+    \begin{proof}
+        Assume that an element $p$ is join prime. We prove that $p$ is join
+        irreducible~\ref{defJoinIrreducible}.
+
+        \begin{enumerate}
+            \item $p$ is not the least element of $L$: Trivial by definition.
+
+            \item Assume $p = a \join b$. We have to show that $p$ is either $a$
+                or $b$.
+
+                Since $p$ is join prime and $p \le a \join b$ we have either $p
+                \le a$ or $p \le b$.
+
+                Assume $p \le a$. Since $p$ is the join of $a$ and $b$ we have
+                $a \le b$ and infer by antisymmetrie $p = a$. This proves the
+                claim.
+
+                Assume $p \le b$. By the same reasoning we get $p = b$ and the
+                claim is valid.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+
+We have seen that all join prime elements are join irreducible as well. But not
+all join irreducibles are join prime as we have seen for the diamond lattice
+$M_3$ and the pentagon lattice $N_5$. But for distributive lattices we can prove
+that all join irreducibles are join prime.
+
+
+\begin{theorem}
+    \label{thmDistributiveJoinIrreducibleIsJoinPrime}
+    %----------------------------------------------------------------------
+    \emph{In a distributive lattice $L$ all join irreducible elements $p$ are
+    join prime. }
+
+    \begin{proof}
+        We have to show
+        \begin{enumerate}
+            \item $p$ is not the least elements of the lattice $L$: Trivial by
+                definition~\ref{defJoinIrreducible}.
+
+            \item If $p \le a \join b$ then $p \le a$ or $p \le b$:
+
+                Assume $p \le a \join b$. By definition of the order relation in
+                a lattice we have $p = p \meet (a \join b)$. Because of
+                distributivity we have $p = (p \meet a) \join (p \meet b)$. $p$
+                is join irreducible~\ref{defJoinIrreducible} so we have either
+                $p = p \meet a$ or $p = p \meet b$ which by definition of the
+                order relation implies $p \le a$ or $p \le b$.
+        \end{enumerate}
+    \end{proof}
+
+    Note that the distributivity of the lattice is essential.
+\end{theorem}
+
+
+\paragraph{Unique join of join irreducibles}
+%----------------------------------------------------------------------
+In the special case of distributive lattices satisfying DCC each element can be
+constructed in a unique manner as a join of join irreducibles.
+
+In the divisibility lattice of the natural number $12$ the lattice elements are
+$\set{1,2,4,3,6,12}$. The prime powers $\set{2,4,3}$ are join irreducible. The
+join operation is the least common multiple $\lcm $ operation.
+
+Let's consider the
+join irreducibles generating the number $12$. At first glance we have two
+possibilities $12 = \lcm(2,3,4) = \lcm(3,4)$. However the operation
+$\lcm(2,3,4)$ is somewhat redundant since $2$ is a factor of $4$ and is
+therefore not needed.
+
+If we restrict ourselves to antichains of join irreducibles we can exclude
+$\lcm(2,3,4)$ because it is not an antichain. By regarding only antichains of
+join irreducibles the number $12$ has the unique factorisation $12 = \lcm(3,4)$.
+
+\begin{theorem}
+    \label{thmDistributiveDCCUniqueJoin}
+    \emph{
+        In a distributive lattice satisfying the descending chain condition
+        every element can be represented as a unique join of of a finite
+        antichain of join irreducibles.
+    }
+
+    \begin{proof} Assume that an element
+        $a$ can be represented by two finite antichains $P$ and $Q$ of join
+        irreducibles i.e. $a = \bigjoin P = \bigjoin Q$. We prove $P \subseteq
+        Q$. The proof of $Q \subseteq P$ is similar and both prove that the
+        representation is unique.
+
+        Assume $p \in P$:
+        \begin{enumerate}
+            \item Since $p \le \bigjoin P$ we have $p \le \bigjoin Q$ as well.
+
+            \item By the prime
+                property~\ref{thmDistributiveJoinIrreducibleIsJoinPrime}
+                there is some $q \in Q$ such that $p \le q$.
+
+            \item By the same reasoning there exists a $p' \in P$ such that $q \le
+                p'$.
+
+            \item This gives us $p \le q \le p'$. $P$ being an antichain
+                guarantees $p = p'$ and therefore $p = q$.
+
+            \item So $p \in Q$ for all $p \in P$.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+
+We have already seen that distributivity and the descending chain condition give
+us a lot of nice properties of the join irreducibles. If we restrict ourselves
+to complete lattices (note: all finite lattices are complete) then we get the
+strong property that no infinite antichain of join irreducibles exists. I.e. the
+lattice can grow upwards arbitrarily, but not downwards and not in width.
+
+\begin{theorem}
+    \label{thmNoInfiniteAntichainJoinIrreducible}
+    %------------------------------------------------------------
+    \emph{ Let $L$ be a complete distributive lattice satisfying the descending
+    chain condition. The all antichains of join irreducibles are finite.}
+
+    \begin{proof}
+        Let's assume there is an infinite antichain $\set{p_0, p_1, p_2,
+        \ldots} \subseteq L$ of join irreducibles. Using this antichain we
+        construct an infinitely descending chain which contradicts the
+        descending chain condition.
+
+        Let $x_0, x_1, x_2, \ldots$ be defined as $x_i := \bigjoin \set{p_i, p_{i+1},
+        \ldots} = \bigjoin \set{p_k: i \le k}$. This implies $x_i = p_i \join
+        x_{i+1}$. $x_i$ is therefore an upperbound for $x_{i+1}$ and we have
+        $x_i \ge x_{i+1}$. So the series is descending.
+
+        Now we proof that the series is strictly descending i.e. $x_i >
+        x_{i+1}$. Assume the opposite i.e. for some $i$ we have $x_i = x_{i+1}$.
+        In this case the condition $x_i = p_i \join x_{i+1}$ gives $x_{i} = p_i
+        \join x_i$. According to the order relation of a lattice this implies
+        $p_i \le x_{i}$.
+
+        WRONG / WRONG: Not strictly descending!!
+    \end{proof}
+\end{theorem}
+
+
+
+
+
+
+\subsection{Compact Elements}
+%======================================================================
+
+\begin{comment}
+    Missing Proofs:
+
+    - In a distributive complete lattice with DCC all join irreducibles are
+    compact: This is NOT VALID. Counterexample: Natural numbers with top. The
+    top element is join irreducible but not compact!!!
+\end{comment}
+
+\paragraph{Examples}
+\begin{enumerate}
+    \item The least element $0$ in a lattice is compact, because $0 = \bigjoin
+        \emptyset$ and the empty set is finite.
+
+    \item All elements in a finite lattice are trivially compact.
+
+    \item Consider the real interval $[0,1]$ with the usual order. It is
+        complete lattice because every subset has a supremum.
+
+        Only the number $0$ is compact. The only possibilities to represent $0$
+        as a join are $0 = \bigjoin \emptyset$ and $0 = \bigjoin \set{0}$. As
+        soon as there is an element different from $0$ in the set, the join is
+        strictly above $0$.
+
+        All the other numbers are not compact. Consider the set
+        $$
+        D := \set{0, \frac 1 2 a, \frac 2 3 a, \ldots, \frac i {i+1} a, \ldots}
+        $$
+        with $0 < a$. The elements in the set come arbitrarily close to $a$ but
+        never reach it. $a$ is the supremum of the set and in particular $a \le
+        \bigjoin D$. However there is no finite subset $F \subseteq D$ with $a
+        \le \bigjoin F$.
+
+    \item Consider the lattice
+
+        \begin{tikzpicture}
+            \graph [grow up, branch right=2cm] {
+                a/$a$ [yshift=3cm],
+                0/$0$ [xshift=-1cm]
+                -- c0/$c_0$
+                -- c1/$c_1$
+                -- c2/$c_2$
+                --[dotted] 1 [xshift=-1cm],
+                0 -- a,
+                a -- 1
+            };
+        \end{tikzpicture}
+
+        $a$ and $1$ are not compact. We have $1 = \bigjoin \set{c_0, c_1,
+        \ldots}$ and therefore $a \le \bigjoin{c_1, c_2, \ldots}$
+        and $1 \le \bigjoin \set{c_0, c_1, \ldots}$. However every subset of
+        $\set{c_0, c_1, \ldots}$ has a maximal element, say $c_m$ and neiter $a
+        \le c_m$ nor $1 \le c_m$ is valid.
+
+        All other elements are compact.
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\subsection{Birkhoff's Representation Theorem}
+%================================================================================
+
+Birkhoff's representation theorem is one of the crown juwels of lattice theory.
+It establishes a prefect duality between lattices satisfying the descending
+chain condition and partial orders satisfying DCC. Note that finite lattices or
+finite partial order always satisfy DCC.
+
+In theorem~\ref{thmDistributiveDCCUniqueJoin} we have seen that the join
+irreducibles in a distributive lattice satisfying DCC are sufficient to generate
+all other elements of the lattice by finite joins. Birkhoff's representation
+theorem makes this statement even stronger. It allows to represent any
+distributive lattice with DCC by the poset of its join irreducible elements.
+
+The basic idea is as follows. Let $L$ be a distributive lattice with DCC and
+$J(L)$ be the set of all join irreducibles of this lattice. The paritial
+ordering of the lattice $L$ induces a partial order on $J(L)$. It is the
+restriction of the partial order of $L$ to $J(L)$.
+
+Having the poset $J(L)$ it is possible to construct a lattice as a subset of the
+powerset $\powerset(J(L))$ which is isomorphic to the original lattice.
+
+We use the set of all lower sets (i.e. downclosed sets). Let $O(J(L))$ be the
+set of all down closed sets of the join irreducibles of $L$. We define $\phi:
+L \to O(J(L))$ as
+$$
+    \phi(a) := \set{p \in J(L): p \le a}
+$$
+By definition the set $\phi(a)$ is a lower set i.e. with each join
+irreducible element it contains all join irreducibles below it. Birkhoff's
+representation theorem states that $\phi: L \to O(J(L))$ is a lattice
+isomorphism i.e. it is bijective, order preserving and preserves all meets and joins.
+
+
+
+
+
+\begin{theorem}
+    \label{thmBirkhoffRepresentation}
+    \emph{
+        Let $L$ be a distributive lattice satisfying the descending chain
+        condition, $J(L) \subseteq L$ the join irreducible elements of the
+        lattice $L$. $L$ imposes a partial order on $J(L)$. Let $O(J(L))$ be
+        the set of lower sets and
+        $\phi: L \to O_f(J(L))$ be a map defined as $\phi(a) := \set{p \in J(L):
+        p \le a}$.  Then $\phi$ is a lattice isomorphism when the codmain of
+        $\phi$ is restricted to finitely generated lower sets i.e. elements of
+        $O(J(L))$ which have the form $\downclosed F$ where $F$ is a finite set
+        of join irreducibles.
+    }
+
+    \begin{proof}
+        We have to prove that $\phi$ is bijective (injective and surjective),
+        preserves the order and presverves the joins and meets.
+
+        \begin{enumerate}
+            \item $\phi$ is injective:
+
+                We have to prove that $\phi(a) = \phi(b) \implies a = b$. Assume
+                $\phi(a) = \phi(b)$.
+                $$
+                \vertlist{
+                    a &=& \bigjoin(\phi(a))
+                    & \text{theorem~\ref{thmJoinOfJoinIrreduciblesBelow}}
+                    \\
+                    &=& \bigjoin(\phi(b)) &\text{assumption}
+                    \\
+                    &=& b
+                    & \text{theorem~\ref{thmJoinOfJoinIrreduciblesBelow}}
+                }
+                $$
+
+            \item $\phi$ is surjective:
+
+                We habe to prove that for each finite set $F \subseteq J(L)$ of
+                join irreducibles there exists an $a \in L$ such that $\phi(a) =
+                \downclosed F$.
+
+                Let $a := \bigjoin F$ where $\bigjoin$ is the join operation in
+                the lattice $L$. We have to prove $\phi(a) = \downclosed F$.
+
+                By definition we have
+                $\phi(a) = \set{p \in J(L): p \le \bigjoin F}$.
+                From theorem~\ref{thmDistributiveJoinIrreducibleIsJoinPrime} we
+                conclude that all join irreducibles are join prime and by
+                definition of the prime property~\ref{defJoinPrime} we can see
+                that $p \le \bigjoin F$ is equivalent to $\exists p_i \in F: p
+                \le p_i$. I.e. we have
+                $$
+                    \phi(a) = \set{p \in J(L): \exists p_i \in F: p \le p_i}
+                $$
+
+                Now remember that by definition of a downset we have
+                $$
+                    \downclosed F = \set{p \in J(L): \exists p_i \in F: p \le p_i}
+                $$
+                i.e. both sets are equivalent.
+
+
+            \item $\phi$ preserves order:
+
+                MISSING
+
+            \item $\phi$ preserves joins:
+
+                MISSING
+
+            \item $\phi$ preserves meets:
+
+                MISSING
+
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+
+
+\paragraph{Example Project Tasks}. Assume we have 3 tasks $A$, $B$ and $C$ where
+$A$ must be done before $B$ and $C$ can be done in parallel. The dependency
+graph is a poset with the Hasse diagram
+
+\begin{tikzpicture}
+    \graph[grow up, branch right=2cm] {
+        A/$A$ -- B/$B$,
+        C/$C$
+    };
+\end{tikzpicture}
+
+Now let us look at all possible lower sets of this partial order.
+
+\begin{itemize}
+    \item $\emptyset$: Nothing is done.
+
+    \item $\set{A}$: $A$ is done.
+
+    \item $\set{A,B}$: $A$ and $B$ are done.
+
+    \item $\set{C}$: $C$ is done.
+
+    \item $\set{A,C}$: $A$ and $C$ are done.
+
+    \item $\set{A,B,C}$: All tasks are done.
+\end{itemize}
+
+Note that $\set{B}$ is not a lower set, because it does not include $A$ which is
+below $B$.
+
+We can draw the lattice of the lower sets.
+
+\begin{tikzpicture}
+    \graph[grow up, branch right=2cm] {
+        empty/$\emptyset$ [xshift=2cm]
+        --
+        {
+            {
+                A/$\set{A}$ [xshift=1cm]
+                --
+                {
+                    AB/$\set{A,B}$,
+                    AC/$\set{A,C}$
+                }
+                --
+                ABC/$\set{A,B,C}$ [xshift=1cm]
+            },
+            C/$\set{C}$
+        },
+        C -- AC
+    };
+\end{tikzpicture}

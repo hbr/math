@@ -1,0 +1,278 @@
+\section{Order}
+%======================================================================
+
+
+\begin{comment}
+    - Order relation: reflexive, antisymmetric, transitive
+    - Strict order
+    - upper bound, upper bounds
+    - greatest element: upper bound + in the set, def + uniqueness
+    - least upper bound, def + uniqueness
+    - maximal element
+    - monotonic functions
+    - cover relation -> hasse diagram
+    - dual order
+
+    - examples:
+
+        - Mn
+        - n-crown
+        - partial maps
+        - natural numbers
+        - rational numbers (no hasse diagram
+
+    - closure
+        - operator: def idem, monotone, extensive, example ceiling
+        - closure system: subset such that for all elements there is a least
+        closed element above it
+        - relation of both notions
+        - galois connection
+\end{comment}
+
+
+
+
+
+
+\subsection{Basic Definitions}
+%----------------------------------------------------------------------
+
+
+\begin{definition}
+    \label{defPoset}
+    %------------------
+    The pair $(S, \le)$ of a set $S$ and a relation $\le$ is called a
+    \emph{partial order}
+    %-------------------
+    if the relation is
+    \begin{enumerate}
+        \item reflexive: $x \le x$
+
+        \item antisymmetric: $x \le y \land y \le x \implies x = y$
+
+        \item transitive $x \le y \land y \le z \implies x \le z$
+    \end{enumerate}
+    for all $x, y, z \in S$.
+\end{definition}
+
+
+
+
+
+
+
+\subsection{Special Elements}
+%----------------------------------------------------------------------
+
+\begin{definition}
+    \label{defMinimalMaximalElement}
+    %--------------------------------------------------
+
+    An element $m \in A \subseteq P$ is a \emph{minimal element} in a subset $A$
+    of a partial order $P$ if there is no strictly smaller element in the set
+    $A$ i.e. $x \le a \implies x = a$ for all $x \in A$.
+
+
+    An element $m \in A \subseteq P$ is a \emph{maximal element} in a subset $A$
+    of a partial order $P$ if there is no strictly greate element in the set
+    $A$ i.e. $a \le x \implies x = a$ for all $x \in A$.
+
+\end{definition}
+
+
+
+\begin{definition}
+    \label{defUpperLowerBound}
+    %------------------------------------------------------------
+
+    Let $P$ be a partially ordered set and $A \subseteq P$ an arbitrary subset
+    of $P$.
+
+    An element $u \in P$ is called an \emph{upper bound} of $A$ if all elements
+    in $A$ are less equal $u$ i.e. $\forall a\in A: a \le u$.
+
+    An element $l \in P$ is called an \emph{lower bound} of $A$ if all elements
+    in $A$ are greater equal $l$ i.e. $\forall a\in A: l \le a$.
+
+    The set $A^u$ is the set of all upper bounds of $A$ and $A^l$ is the set of
+    all lower bounds of $A$ i.e.
+    $$
+    \vertlist{
+        A^u &:=& \set{x \in P: \forall a \in A: a \le x}
+        \\
+        A^l &:=& \set{x \in P: \forall a \in A: x \le a}
+    }
+    $$
+\end{definition}
+
+
+
+\begin{definition}
+    \label{defMaximumMinimum}
+    %--------------------------------------------------
+
+    An element $m \in A$ of a subset $A \subseteq P$ of a partial order $(P,
+    \le)$ is called a \emph{maximum} of $A$ if it is an upper bound of $A$ i.e.
+    $m \in A^u$ and it is in the set $m \in A$.
+
+    $m$ is called a \emph{minimum} of the set $A$ if it satisfies $m \in A^l$
+    and $m \in A$.
+\end{definition}
+
+A maximum is in the intersection $A \cap A^u$, a minimum is in the intersection
+$A \cap A^l$. Both intersections might be empty i.e. a maximum or a minimum of a
+set $A$ might not exist.
+
+If a maximum or a minimum of a set exists, then it is unique.
+
+\begin{theorem}
+    \label{thmMaximumMinimumUnique}
+    \emph{Let $A \subseteq P$ of the partial order $(P, \le)$. A maximum or a
+    minimum of the set $A$ (if it exists) is unique.
+    }
+
+    \begin{proof}
+        Let $m, n \in P$ be two maxima of the set $A$. We have to show that both
+        are equal. Since both are maxima we have $m, n \in A$ and $m,n \in A^u$.
+        By definition~\ref{defUpperLowerBound} of $A^u$ we have $a \le m$ and $a
+        \le n$ for all $a \in A$. This implies $m \le n$ and $n \le m$. An order
+        relation is antisymmetric~\ref{defPoset} i.e. $m = n$ is valid.
+
+        In the same manner the uniqueness of a minimum can be shown.
+    \end{proof}
+\end{theorem}
+
+
+\begin{definition}
+    \label{defSupremumInfimum}
+    %--------------------------------------------------
+    Let $A \subseteq P$ of the partial order $(P, \le)$.
+
+    An element $m \in P$ is a \emph{supremum} or \emph{join} or \emph{least
+    upper bound} of the set $A$ if $m$ is the minimum of $A^u$.
+
+    An element $m \in P$ is an \emph{infimum} or \emph{meet} or \emph{greatest
+    lower bound} of the set $A$ if $m$ is the maximum of $A^l$.
+
+    Note that neither a minimum of $A^u$ nor a maximum of $A^l$ might exist.
+    Therefore a join or a meet of a set $A$ might not exist.
+
+    However of a join or a meet exists then it is unique because the maximum and
+    minimum are unique~\ref{thmMaximumMinimumUnique}.
+
+    If a join of a set $A$ exists it is written as $\bigjoin A$. If a meet of
+    $A$ exists it is written as $\bigmeet A$. If the join or meet of the two
+    element set $\set{a,b}$ exists we write $a \join b$ as the join of
+    $\set{a,b}$ and $a \meet b$ as the meet of $\set{a,b}$
+    %
+    \footnote{In many texts the join of two elements is written as $a \lor b$
+    and the meet as $a \land b$. Here this notation is not used to avoid
+    confusion with the corresponding logical operators.}.
+\end{definition}
+
+
+\paragraph{Examples} Let's discuss the above definitions by looking at the
+partial order
+
+\begin{tikzpicture}
+    \graph [branch right=2cm, grow up] {
+        0 [xshift=1cm]
+        -- {
+            c/$c$ -- a,
+            d -- b,
+            c -- b,
+            d -- a
+        }
+        %-- 1 [xshift=1cm];
+    };
+\end{tikzpicture}
+
+\begin{enumerate}
+    \item The upper bounds and the lower bounds of the empty set is the set of
+        all elements of the partial order i.e.  $\emptyset^u = \emptyset^l =
+        \set{0,a,b,c,d}$.
+
+    \item For all singleton sets $\set{x}$ the element is contained in the
+        upperbounds $x \in \set{x}^u$ and in the lower bounds $x \in \set{x}^l$
+        of the singleton set. Therefore alll singleton sets have a maximum and a
+        minimum. By definition the element is a singleton set is a minimal and a
+        maximal element of the singleton set.
+
+    \item The set $\set{a,b}$ does not have upper bounds i.e. $\set{a,b}^u =
+        \emptyset$. But lower bounds exist $\set{a,b}^l = \set{c,d,0}$. Since
+        $\set{a,b}^u$ is empty, the set $\set{a,b}$ does not have a join. The
+        set of lower bounds is not empty, however $\set{c,d,0}$ does not have a
+        maximum. Therefore $\set{a,b}$ does not have a meet either.
+
+    \item
+        Both $a$ and $b$ are maximal elements of the set of all elements.
+
+    \item The set $\set{c,d}$ does have lower bound. It is a singleton set
+        $\set{c,d} = \set{0}$. Since the element of a singleton set is the
+        maximum and the minimum of the singleton set we conclude that the meet
+        of $\set{c,d}$ exists i.e. we have $\bigmeet \set{c,d} = c \meet d = 0$.
+
+    \item The element $0$ is a minimal element of the set of all elements. It is
+        a minimum of the set of all elements as well.
+\end{enumerate}
+
+
+
+
+
+
+\subsection{Limit Element}
+%----------------------------------------------------------------------
+
+In infinite posets it is possible that an element $c$ has infinitely many
+elements below it.
+
+\begin{tikzpicture}
+    \graph [grow up, branch right=2cm] {
+        a0/$a_0$ -- a1/$a_1$ -- a2/$a_2$ --[dotted] c/$c$[xshift=1cm],
+        b0/$b_0$ -- b1/$b_1$ -- b2/$b_2$ --[dotted] c
+    };
+\end{tikzpicture}
+
+I.e. going upwards with a finite number of steps it is not possible to reach a
+limit element. There are infinitely many steps needed to reach a limit element
+from below. I.e. if you have an element $a_i < c$ then there exists always
+another bigger element $a_{i+1}$ such that $a_i < a_{i+1} < c$.
+
+
+If we take the natural numbers $\Nat$ and add a top element to it i.e. we use the
+set $\set{0,1,2, \ldots, \infty}$ and use the usual order, then $\infty$ is a
+limit element.
+
+\begin{definition}
+    \label{defLimitElement}
+    %--------------------------------------------------
+
+    An element $a$ is a limit element in a partial order if
+    \begin{enumerate}
+        \item it is not a minimal element of the order.
+
+        \item for all $x < a$ there exists an $y$ with $x < y < a$
+            i.e. $a$ has no immediate predecessor.
+    \end{enumerate}
+
+\end{definition}
+
+
+\begin{theorem}
+    \label{thmLimitElementIsJoin}
+    \emph{A limit element $a$ in a partial order is the join of all elements
+    strictly below it $a = \bigjoin \set{x: x < a}$.}
+
+    \begin{proof}
+        Let $A := \set{x: x < a}$.
+        $a$ is certainly an upper bound for all elements strictly below it i.e
+        $a \in A^u$. We have to prove that $a$ is the least element in $A^u$
+        i.e. for all $b \in A^u$ we have  $a \le b$.
+
+        Suppose there is a $b \in A^u$ with $b < a$. Then by definition of a
+        limit element there exists an $x \in A$ with $b < x < a$. This
+        contradicts the assumption that $b$ is an upper bound for all elements
+        in $A$. Therefore such a $b$ cannot exist.
+    \end{proof}
+\end{theorem}

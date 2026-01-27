@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amsthm,amssymb, stmaryrd, xcolor,graphicx,tikz}
+\usepackage{comment}
+\usepackage{cite}
+\usepackage[pdftex]{hyperref}
+\usetikzlibrary{graphs, positioning}
+
+\begin{document}
+
+
+\title{
+    Order and Lattice Theorie
+}
+
+\author{
+    Helmut Brandl
+    \\
+    \scriptsize (firstname dot lastname at gmx dot net)
+}
+\date{}
+
+\maketitle
+
+
+\abstract{
+    Introduction to order and lattice theory.
+}
+
+
+\tableofcontents
+
+
+
+
+
+
+\input   {ord_macros}
+
+\include {ord_poset}
+\include {ord_lattice}
+
+
+
+
+
+
+
+
+\section{Examples}
+%======================================================================
+
+This is text and a graph
+\tikz \graph [branch right=2cm, grow up] {
+    bottom [xshift=1cm] -- {
+        a --[dotted] c,
+        b -- d,
+        b -- c,
+        a -- d,
+    };
+};
+
+
+
+\begin{tikzpicture}
+    \node {root} [grow=up]
+    child {node {left}}
+    child {node {right}
+      child {node {child}}
+      child {node {child}}
+    };
+\end{tikzpicture}
+
+
+
+\begin{tikzpicture}
+     \graph [branch right=2cm, grow up] {
+        bottom [xshift=1cm] -- {
+            a -- c,
+            b -- d,
+            b -- c,
+            a -- d,
+        };
+    };
+\end{tikzpicture}
+
+\end{document}

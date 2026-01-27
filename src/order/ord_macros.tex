@@ -1,0 +1,38 @@
+\def\set#1{\left\{#1\right\}}
+\def\powerset{{\mathcal P}}
+
+\def\join{\sqcup}
+\def\meet{\sqcap}
+\def\bigjoin{\bigsqcup}
+\def\bigmeet{\bigsqcap}
+\def\downclosed{{\downarrow}}
+
+\def\Nat{\mathbb N}
+
+\def\lcm{\text{lcm}}
+\def\gcd{\text{gcd}}
+
+
+% Logic
+\def\vertlist#1{
+    \begin{array}{lllll}
+    #1
+    \end{array}
+}
+
+\def\bracklist#1{
+    \left[ \vertlist{#1} \right]
+}
+
+\def\ruleh#1#2{\begin{array}{c} #1 \\ \hline #2\end{array}}
+\def\rulev#1#2{\begin{array}{l} #1 \\ \hline #2\end{array}}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section] % envname, text, number base
+\newtheorem{theorem}[definition]{Theorem}    % envname, parent counter, text
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{example}[definition]{Example}
+\newtheorem{remark}[definition]{Remark}
+
