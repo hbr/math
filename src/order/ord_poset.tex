@@ -171,6 +171,17 @@ If a maximum or a minimum of a set exists, then it is unique.
 \end{definition}
 
 
+\begin{definition}
+    \label{defCover}
+    %------------------------------------------------------------
+    Let $(P, \le)$ be a partial order and $a$ and $b$ two elements of the order.
+    We say that \emph{$b$ covers $a$} or $a \prec b$ if $a < b$ and there is no
+    element $x$ with $a < x < b$. The relation $\prec$ is called a covering
+    relation.
+\end{definition}
+
+
+
 \paragraph{Examples} Let's discuss the above definitions by looking at the
 partial order
 
@@ -274,5 +285,147 @@ limit element.
         limit element there exists an $x \in A$ with $b < x < a$. This
         contradicts the assumption that $b$ is an upper bound for all elements
         in $A$. Therefore such a $b$ cannot exist.
+    \end{proof}
+\end{theorem}
+
+
+\begin{theorem}
+    \label{thmLimitNoCover}
+    %------------------------------------------------------------
+    \emph{
+        A limit element $b \in P$ in a partial order $(P, \le)$ cannot
+        cover~\ref{defCover} and element $a < b$ below it.
+    }
+
+    \begin{proof}
+        Assume $a \prec b$ i.e. that $b$ covers $a$. By definition of a limit
+        element~\ref{defLimitElement} there exists some $x \in P$ such that $a <
+        x < b$. This contradicts the definition of a cover~\ref{defCover}.
+    \end{proof}
+\end{theorem}
+
+
+
+
+
+
+\subsection{Wellfounded Orders / DCC}
+%----------------------------------------------------------------------
+
+\begin{definition}
+    \label{defWellfoundedOrder}
+    %------------------------------------------------------------
+    A partial order~\ref{defPoset} $(P,\le)$ is \emph{wellfounded} if every
+    nonempty subset $A \subseteq P$ has a minimal element.
+\end{definition}
+
+
+
+
+
+
+
+
+\begin{theorem}
+    \label{thmWeaklyDescendingChain}
+    %------------------------------------------------------------
+    \emph{Let $(P, \le)$ be a wellfounded partial order and $\set{a_0, a_1,
+    a_2, \ldots}$ be a weakly descending chain in $P$ i.e. $a_{i+1} \le a_i$ for
+    all $i$. Then there exists an $a_i$ in the chain such that $a_{i+j} = a_i$
+    for all $j$}.
+
+    \begin{proof}
+        The set $\set{a_0, a_1, a_2, \ldots}$ is not empty. Since the order is
+        wellfounded, there exist a minimal element in this set. Let $a_i$ be a
+        minimal element. In a chain minimal element is the least element.
+        Therefore $a_i \le a_{i+j}$.
+
+        Because the chain is weakly descending and because of transitivity we
+        have $a_{i+j} \le a_i$.
+
+        Together with antisymmetry $a_{i+j} = a_i$ is valid for all $j$.
+    \end{proof}
+\end{theorem}
+
+
+
+
+
+\begin{theorem}
+    \label{thmDCC}
+    %------------------------------------------------------------
+    \emph{Let $(P, \le)$ be a wellfounded partial order. No infinitely strictly
+    descending chain $\set{a_0, a_1, a_2, \ldots}$ with $a_{i+1} < a_i$ for all
+    $i$ exists}.
+
+    \begin{proof}
+        Assume that an infinitely strictly descending chain exists.
+
+        An infinitely strictly descending chain is an infinitely weakly
+        descending chain as well by the definition of the strict order $<$.
+        According to theorem~\ref{thmWeaklyDescendingChain} there exist an $i$
+        such that $a_{i + j} = a_i$ for all $j$.  This contradicts the
+        assumption that the chain is strictly descending.
+    \end{proof}
+\end{theorem}
+
+
+
+\begin{theorem}
+    \label{thmDCCWellfounded}
+    %------------------------------------------------------------
+    \emph{
+        Let $P, \le$ be a partial order with a choice function $f$ (a choice
+        function maps each nonempty subset $A \subseteq P$ to an element of the
+        set $f(A) \in A$). Moreover no infinite strictly descending chain
+        exists in $P$. Then the partial order is wellfounded.
+    }
+
+    \begin{proof}
+        Assume that the order is not wellfounded i.e. there exists a nonempty
+        subset $A \subseteq P$ which does not have a minimal element.
+
+        We recursively construct a set $\set{a_0, a_1, a_2, \ldots}$ by
+        $$
+        \vertlist{
+            a_0 &:=& f(A)
+            \\
+            a_{i+1} &:=& f(\set{x: x < a_i})
+        }
+        $$
+        Note that the set is welldefined, because $A$ is not empty and no $a_i$
+        can be minimal so the set $\set{x: x < a_i}$ is not empty as well.
+
+        By definition the set is a strictly descending infinite chain
+        contradicting the assumption that no strictly descending infinite chain
+        exists.
+    \end{proof}
+\end{theorem}
+
+Note that the nonexistence of an infinite strictly descending chain is not
+sufficient to prove that the order is wellfounded. We need a choice function to
+construct the infinite strictly descending chain. Furthermore note that the
+proof is not constructive. It proves the existence of minimal elements by
+assuming their nonexistence and derive a contradiction. This requires the double
+negation law which cannot be assumed in constructive mathematics.
+
+
+
+
+
+
+\begin{theorem}
+    \label{thmWellfoundedHasCover}
+    %------------------------------------------------------------
+    \emph{
+        Let $(P, \le)$ be a wellfounded partial order. Then for all elements $a
+        \in P$ which are not maximal there exists a cover $a \prec b$.
+    }
+
+    \begin{proof}
+        Let $a \in P$ be not maximal. I.e. the set $\set{x: a < x}$ is not
+        empty. There exist a minimal element $b$ in the set. By minimality there
+        is no element $x$ in between ($a < x < b$ is not possible). Therefore
+        $b$ covers~\ref{defCover} $a$ i.e. $a \prec b$ is valid.
     \end{proof}
 \end{theorem}
