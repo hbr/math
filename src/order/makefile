@@ -2,11 +2,12 @@ build-dir    = ../../_build/order
 gh-pages-dir = ../../gh-pages
 
 
-source-files = \
-	ord_main.tex \
-	ord_macros.tex \
-	ord_poset.tex  \
-	ord_lattice.tex
+source-files =      \
+	ord_main.tex    \
+	ord_macros.tex  \
+	ord_poset.tex   \
+	ord_lattice.tex \
+	ord_ac.tex
 
 
 # Generate a pdf from scratch:

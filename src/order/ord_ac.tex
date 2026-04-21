@@ -1,0 +1,168 @@
+\section{Axiom of Choice}
+
+
+
+
+\begin{definition}
+    \label{defChoiceFunction}
+    %------------------------------------------------------------
+    A function $f$ is a \emph{choice function} for a set $A$ if it maps every
+    nonempty subset $S \subseteq A$ into an element of the set $f(S) \in S$.
+\end{definition}
+
+
+
+
+\begin{definition}
+    \label{defUpperChoiceFunction}
+    %------------------------------------------------------------
+    Let $(P, \le)$ be a partial order, $A \subseteq P$ a subset of the order and
+    $f$ a choice function for $P$. Then the function $g$
+    $$
+        g(A) := f(A^u - A)
+    $$
+    defined for all $A$ such that $A^u - A$ is not empty is an \emph{upper bound
+    choice function} for the partial order. It select for all subsets of the
+    order a strict upper bound of the set, provided that a strict upper bound
+    exists.
+\end{definition}
+
+
+\begin{definition}
+    \label{defChainOrderIdeal}
+    %------------------------------------------------------------
+    Let $(P, \le)$ be a partial order and $C \subseteq P$ a chain in $P$. $A$ is
+    an \emph{order ideal of the chain $C$} if $A \subseteq C$ and
+    $$
+    \rulev{
+        x \in A
+            \\
+            y \le x
+            \\
+            y \in C
+    } {
+        y \in A
+    }
+    $$
+    is valid.
+\end{definition}
+
+
+\begin{definition}
+    \label{defInitialSegment}
+    %------------------------------------------------------------
+    Let $(P, \le)$ be a partial order and $C \subseteq P$ a chain in $P$. For
+    all $x \in C$ we call $S_x^C := \set{y \in C: y < x}$ a \emph{proper initial
+    segment} of $C$.
+\end{definition}
+
+
+
+In the remainder of the section we assume a partial order $(P,\le)$ with an
+upper bound choice function $g$ which selects from every subset $A \subseteq P$
+a strict upper bound i.e. an element of $A^u - A$ provided that $A^u - A$ is not
+empty i.e. a strict upper bound exists.
+
+
+\begin{definition}
+    \label{defTower}
+    %------------------------------------------------------------
+    $T \subseteq P$ is a \emph{tower} if it is a chain and for all proper order
+    ideals~\ref{defChainOrderIdeal} $A \subset T$ the value $g(A)$ is the least
+    strict upper bound of $A$ in $T$.
+\end{definition}
+
+
+\begin{lemma}
+    \label{thmTowerWellorder}
+    \emph{A tower is a wellorder.}
+
+    \begin{proof}
+        We have to show that each nonempty subset $S \subseteq T$ of a tower $T$
+        has a least element.
+
+        We form the strict lower bounds $A := (S^l - S) \cap T$ of $S$ in the
+        tower $T$ and show that $A$ is an order ideal of $T$. By definition it
+        is a subset of $T$. Let $x \in A$, $y \le x$ and $y \in T$. We have to
+        show that $y \in A$ is valid. Since $A$ is downclosed in $T$ this is
+        certainly valid.
+
+        By definition of $A$ the sets $A$ and $S$ are disjoint and their union
+        is a subset of $T$. Since $S$ is not empty, $A$ is proper order ideal of
+        $T$.
+
+        We claim that $g(A) \in S$. By definition of  a tower~\ref{defTower}
+        $g(A)$ is the least strict upper bound of $A$ in $T$. If it were not in
+        $S$, then $g(A)$ would be a strict lower bound of $S$ in $T$ and would
+        have to be in $A$ by the definition of $A$. This contradicts the fact
+        that $g(A)$ is a strict upper bound of $A$ in $T$.
+
+        $S$ has only strict upper bounds of $A$ by definition of $A$, $g(A)$ is
+        the least strict upper bound and it is in $S$. Therefore $g(A)$ is the
+        least element of $S$.
+    \end{proof}
+\end{lemma}
+
+
+
+\begin{lemma}
+    \label{thmtowerOrderIdealEnlargement}
+    \emph{Let $T$ be a tower and $A \subset T$ a proper order ideal of $T$. Then
+    $A \cup \set{g(A)}$ is an order ideal of $T$}.
+\end{lemma}
+
+
+
+\begin{lemma}
+    \label{thmTowersComparable}
+    %------------------------------------------------------------
+    \emph{
+        Let $B$ and $C$ be towers~\ref{defTower}. Then either $B$ is an order
+        ideal of $C$ or $C$ is an order ideal of $B$.
+    }
+
+    \begin{proof}
+        MISSING!!!!
+    \end{proof}
+\end{lemma}
+
+
+
+\begin{lemma}
+    \label{thmTowerUnion}
+    %------------------------------------------------------------
+    \emph{
+        The union $U$ of all towers is a tower.
+    }
+
+    \begin{proof}
+        We have to prove that $U$ is a chain and for all proper order ideals
+        $A \subset U$ of $U$ the upper bound choice function applied to the order
+        ideal $g(A)$ selects the least strict upper bound of $A$ in $U$.
+
+        \begin{enumerate}
+            \item $U$ is a chain: Let $x,y \in U$. We have to show that either
+            $x \le y$ or $y \le x$ is valid.
+
+            Since $x,y \in U$ there are two towers $B$ and $C$ such that $x \in
+            B$ and $y in C$ by the definition of a union. By the
+            lemma~\ref{thmTowersComparable} we know that one of $B$ and $C$ is a
+            ideal of the other. Without loss of generality we assume $B$ is an
+            order ideal of $C$. This implies that $x \in C$ is valid.
+
+            Since $C$ is a tower and therefore a chain either $x \le y$ or $y
+            \le x$ is valid.
+
+
+            \item Strict lower bound selected: Assume $A \subset U$ has a strict
+            upper bound $z \in U$. By definition of a union there exists a tower
+            $C$ with $z \in C$.
+
+            We show that $A$ is a proper order ideal of $C$. In order to do that
+            we assume $x \in A$, $y \le x$ and $y \in C$ and have to show that
+            $y \in A$.
+
+            MISSING!!
+        \end{enumerate}
+    \end{proof}
+\end{lemma}
