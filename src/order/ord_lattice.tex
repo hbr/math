@@ -18,6 +18,139 @@
         - Knaster-Tarski
 \end{comment}
 
+
+\subsection{Semilattice}
+%----------------------------------------------------------------------
+
+
+\begin{definition}
+    We give two definitions of a meet semilattice and prove that the definitions
+    are equivalent.
+
+    \begin{enumerate}
+        \item A \emph{meet semilattice} is a partial order $(P, \le)$ where each
+            pair of elements $x, y \in P$ have a meet (i.e. a greatest lower
+            bound)~\ref{defSupremumInfimum} $x \meet y$.
+
+        \item A \emph{meet semilattice} is an algebra $(P, \meet)$ with a binary
+            meet (greatest lower bound) operation $\meet$ which satisfies
+            \begin{enumerate}
+                \item $x = x \meet x$ (idempotent)
+
+                \item $x \meet y = y \meet x$ (commutative)
+
+                \item $(x \meet y) \meet z = x \meet (y \meet z)$ (associative)
+            \end{enumerate}
+            for all $x, y, z \in P$.
+
+            The relation $\le$ is defined by the algebraic operation by $x \le y
+            := x = x \meet y$.
+    \end{enumerate}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item $(1 \implies 2)$: We have to show that the meet of two
+                elements in a partial order satisfies the algebraic laws of the
+                second definition.
+
+                MISSING
+
+            \item $(2 \implies 1)$: We have to show that the algebra of the
+                second definition defines a partial order where the algebraic
+                operation gives the greatest lower bound consistently with the
+                defined partial order.
+
+                First we show that the operation $\le$ is a partial order i.e.
+                it is reflexive, antisymmetric and transitive.
+
+                \begin{enumerate}
+                    \item reflexive: Since $\meet$ is idempotent we have $x = x
+                        \meet x$. According to the definition of $\le$ in $(1)$
+                        we have $x \le x$.
+
+                    \item antisymmetric: We assume $x \le y$ and $y \le x$ and
+                        have to prove $x = y$.
+                        $$
+                        \vertlist{
+                            x &=& x \meet y &\text{definition of $x \le y$}
+                            \\
+                            &=& y \meet x   &\text{commutative}
+                            \\
+                            &=& y &\text{definition of $y \le x$}
+                        }
+                        $$
+
+                    \item transitive: We assume $x \le y$ and $y \le z$ and have
+                        to prove $x \le z$.
+                        $$
+                        \vertlist{
+                            x
+                            &=& x \meet y
+                            &\text{definition of $x \le y$}
+                            \\
+                            &=& x \meet (y \meet z)
+                            &\text{definition of $y \le z$}
+                            \\
+                            &=& (x \meet y) \meet z
+                            &\text{associative}
+                            \\
+                            &=& x \meet z
+                            &\text{definition of $x \le y$}
+                        }
+                        $$
+                        We have shown $x = x \meet z$ which by definition proves
+                        $x \le z$.
+                \end{enumerate}
+
+                Next we show that $x \meet y$ is a lower bound of $x$. We prove
+                that $x \meet y$ is a lower bound of $x$ i.e.
+                $x \meet y \le x$ i.e. $x \meet y = (x \meet y) \meet x$. The
+                proof that $x \meet y$ is a lower bound of $y$ is nearly the
+                same.
+
+                $$
+                \vertlist{
+                    x \meet y
+                    &=& (x \meet x) \meet y
+                    &\text{idempotent}
+                    \\
+                    &=& x \meet (x \meet y)
+                    &\text{associative}
+                    \\
+                    &=& x \meet (y \meet x)
+                    &\text{commutative}
+                    \\
+                    &=& (x \meet y) \meet x
+                    &\text{associative}
+                }
+                $$
+
+                Finally we have to show that $x \meet y$ is the greatest lower
+                bound of $x$ and $y$. We assume an element $z$ which is a lower
+                bound of $x$ and $y$ (i.e. $z \le x$ and $z \le y$) and prove $z
+                \le x \meet y$ i.e. $z = z \meet (x \meet y)$.
+                $$
+                \vertlist{
+                    z
+                    &=& z \meet y
+                    &\text{definition of $z \le y$}
+                    \\
+                    &=& (z \meet x) \meet y
+                    &\text{definition of $z \le x$}
+                    \\
+                    &=& z \meet (x \meet y)
+                    &\text{associative}
+                }
+                $$
+        \end{enumerate}
+    \end{proof}
+\end{definition}
+
+
+
+\subsection{Lattice}
+%----------------------------------------------------------------------
+
 % Non lattice
 \begin{tikzpicture}
     \graph [branch right=2cm, grow up] {
