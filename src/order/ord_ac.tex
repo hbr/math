@@ -29,10 +29,10 @@
 
 
 \begin{definition}
-    \label{defChainOrderIdeal}
+    \label{defInitialSegment}
     %------------------------------------------------------------
     Let $(P, \le)$ be a partial order and $C \subseteq P$ a chain in $P$. $A$ is
-    an \emph{order ideal of the chain $C$} if $A \subseteq C$ and
+    an \emph{initial segment of the chain $C$} if $A \subseteq C$ and
     $$
     \rulev{
         x \in A
@@ -48,14 +48,6 @@
 \end{definition}
 
 
-\begin{definition}
-    \label{defInitialSegment}
-    %------------------------------------------------------------
-    Let $(P, \le)$ be a partial order and $C \subseteq P$ a chain in $P$. For
-    all $x \in C$ we call $S_x^C := \set{y \in C: y < x}$ a \emph{proper initial
-    segment} of $C$.
-\end{definition}
-
 
 
 In the remainder of the section we assume a partial order $(P,\le)$ with an
@@ -67,8 +59,8 @@ empty i.e. a strict upper bound exists.
 \begin{definition}
     \label{defTower}
     %------------------------------------------------------------
-    $T \subseteq P$ is a \emph{tower} if it is a chain and for all proper order
-    ideals~\ref{defChainOrderIdeal} $A \subset T$ the value $g(A)$ is the least
+    $T \subseteq P$ is a \emph{tower} if it is a chain and for all proper inital
+    segments~\ref{defInitialSegment} $A \subset T$ the value $g(A)$ is the least
     strict upper bound of $A$ in $T$.
 \end{definition}
 
@@ -82,22 +74,23 @@ empty i.e. a strict upper bound exists.
         has a least element. We form the strict lower bounds $A := (S^l - S)
         \cap T$ of $S$ in the tower $T$ and prove that $S$ has a least element
         in steps by proving
-            $A$ is an order ideal of $T$,
-            $A$ is a proper order ideal of $T$,
+            $A$ is an initial segment of $T$,
+            $A$ is a proper initial segment of $T$,
             $g(A) \in S$
             and
             $g(A)$ is the least element of $S$
 
 
         \begin{enumerate}
-            \item $A$ is an order ideal of $T$: By definition $A$ is a subset of
-            $T$. Let $x \in A$, $y \le x$ and $y \in T$. We have to show that $y
-            \in A$ is valid. Since $A$ is downclosed in $T$ this is certainly
-            valid.
+            \item $A$ is an initial segment of $T$: By definition $A$ is a
+                subset of $T$. Let $x \in A$, $y \le x$ and $y \in T$. We have
+                to show that $y \in A$ is valid. Since $A$ is downclosed in $T$
+                this is certainly valid.
 
-            \item $A$ is a proper order ideal of $T$: By definition of $A$ the
-            sets $A$ and $S$ are disjoint and their union is a subset of $T$.
-            Since $S$ is not empty, $A$ is proper order ideal of $T$.
+            \item $A$ is a proper initial segment of $T$: By definition of $A$
+                the sets $A$ and $S$ are disjoint and their union is a subset of
+                $T$.  Since $S$ is not empty, $A$ is proper initial segment of
+                $T$.
 
             \item $g(A) \in S$:
             By definition of  a tower~\ref{defTower}
@@ -117,9 +110,26 @@ empty i.e. a strict upper bound exists.
 
 
 \begin{lemma}
-    \label{thmtowerOrderIdealEnlargement}
-    \emph{Let $T$ be a tower and $A \subset T$ a proper order ideal of $T$. Then
-    $A \cup \set{g(A)}$ is an order ideal of $T$}.
+    \label{thmTowerInitialSegmentEnlargement}
+    \emph{Let $T$ be a tower and $I \subset T$ a proper initial segment of $T$. Then
+    $A \cup \set{g(I)}$ is an initial segment of $T$}.
+
+    \begin{proof}
+        Since $g(I)$ selects the least strict upper bound of $I$ in $T$ we have
+        $I \cup \set{g(I)} \subseteq T$ and therefore satisfies the first
+        condition in the definition of an initial
+        segment~\ref{defInitialSegment}.
+
+        For the second condition assume $x \in I \cup \set{g(I)}$, $y \le x$ and
+        $y \in T$. We have to show that $y \in I \cup \set{g(I)}$.
+
+        We distinguish the cases $x \ne g(I)$ and $x = g(I)$. In the first case
+        $x \in I$ and therefore $y \in I$ (which implies $y \in I \cup
+        \set{g(I)}$) because $I$ is an initial segment of $T$.
+
+        Now we consider the case $x = g(I)$. For both cases $y = x$ and $y < x$
+        we have $y \in I \cup \set{g(I)}$.
+    \end{proof}
 \end{lemma}
 
 
@@ -128,12 +138,75 @@ empty i.e. a strict upper bound exists.
     \label{thmTowersComparable}
     %------------------------------------------------------------
     \emph{
-        Let $B$ and $C$ be towers~\ref{defTower}. Then either $B$ is an order
-        ideal of $C$ or $C$ is an order ideal of $B$.
+        Comparability Lemma:
+        Let $B$ and $C$ be towers~\ref{defTower}. Then either $B$ is an initial
+        segment of $C$ or $C$ is an initial segment of $B$.
     }
 
     \begin{proof}
-        MISSING!!!!
+        Let $A := \set{x \in B \cap C: \set{x}^l \cap B = \set{x}^l \cap c}$.
+
+        \begin{enumerate}
+            \item $A$ is an initial segment of $B$:
+
+                We assume that $x \in A$ $y \in B$ and $y \le x$ and have to
+                show $y \in A$.
+
+                Since $x \in A$ then by definition $\set{x}^l \cap B = \set{x}^l
+                \cap C$.
+
+                We have $y \le x$ and $y \in B$. Therefore $y \in \set{x}^l \cap
+                B$. This implies $y \in \set{x}^l \cap C$ and therefore $y \in
+                C$.
+
+                In order to show $y \in A$ we have to prove $\set{y}^l \cap B =
+                \set{x}^l \cap C$. We first show $\set{y}^l \cap B \subseteq
+                \set{x}^l \cap C$.
+
+                Assume $z \in \set{x}^l \cap B$. Because of $y \le x$ we have $z
+                \in \set{x}^l \cap B$ and therefore $z \in \set{x}^l \cap C$
+                i.e. $z \in C$. And since $z \in \set{y}^l$ we have $z \in
+                \set{y}^l \cap C$.
+
+                The other direction can be proved in the same manner.
+
+            \item $A$ is an initial segment of $C$: Proof similar to the previous
+                step.
+
+            \item Every initial segment $I$ of $B$ and $C$ is a subset of $A$:
+
+                Assume $x \in I$. We have to show $x \in B \cap C$ and
+                $\set{x}^l \cap B = \set{x}^l \cap C$.
+
+                The first statement is trivial since $I$ is a common initial
+                segment of $B$ and $C$.
+
+                In order to prove the second statement we show $\set{x}^l \cap B
+                \subseteq \set{x}^l \cap C$. The other direction is similar.
+
+                Assume $y \in \set{x}^l \cap B$ i.e. $y \le x$ and $y \in B$.
+                This implies $y \in I$ because $I$ is an initial segment of $B$
+                by definition of an initial segment~\ref{defInitialSegment}.
+                Since $I$ is an initial segment of $C$ as well by definition of
+                an initial segment we have $y \in C$. Therefore $y \in \set{x}^l
+                \cap C$.
+
+            \item $A$ is not a proper initial segment of both $B$ and $C$:
+
+                Assume that $A$ is a proper initial segment of $B$ and $C$.
+                Because $B$ and $C$ are towers~\ref{defTower}
+                and~\ref{thmTowerInitialSegmentEnlargement} the set $A \cup
+                \set{g(A)}$ is an initial segment of $B$ and $C$. This
+                contradicts the fact the every initial segment of $B$ and $C$ is
+                a subset of $A$.
+
+            \item Either $B$ is an initial segment of $C$ or $C$ is an initial
+                segment of $B$:
+
+                Since $A$ is not a proper initial segment of $B$ and $C$ but an
+                initial segment of both it has to be identical to one of them.
+                So one of $B$ and $C$ is an initial segment of the other.
+        \end{enumerate}
     \end{proof}
 \end{lemma}
 
@@ -147,33 +220,31 @@ empty i.e. a strict upper bound exists.
     }
 
     \begin{proof}
-        We have to prove that $U$ is a chain and for all proper order ideals
-        $A \subset U$ of $U$ the upper bound choice function applied to the order
-        ideal $g(A)$ selects the least strict upper bound of $A$ in $U$.
+        We have to prove that $U$ is a chain and for all proper initial segments
+        $A \subset U$ of $U$ the upper bound choice function applied to the
+        initial segment $g(I)$ selects the least strict upper bound of $I$ in
+        $U$.
 
         \begin{enumerate}
             \item $U$ is a chain: Let $x,y \in U$. We have to show that either
             $x \le y$ or $y \le x$ is valid.
 
             Since $x,y \in U$ there are two towers $B$ and $C$ such that $x \in
-            B$ and $y in C$ by the definition of a union. By the
+            B$ and $y \in C$ by the definition of a union. By the comparability
             lemma~\ref{thmTowersComparable} we know that one of $B$ and $C$ is a
             ideal of the other. Without loss of generality we assume $B$ is an
-            order ideal of $C$. This implies that $x \in C$ is valid.
+            initial segment of $C$. This implies that $x \in C$ is valid.
 
             Since $C$ is a tower and therefore a chain either $x \le y$ or $y
             \le x$ is valid.
 
 
-            \item Strict lower bound selected: Assume $A \subset U$ has a strict
-            upper bound $z \in U$. By definition of a union there exists a tower
-            $C$ with $z \in C$.
+            \item Strict lower bound selected:
 
-            We show that $A$ is a proper order ideal of $C$. In order to do that
-            we assume $x \in A$, $y \le x$ and $y \in C$ and have to show that
-            $y \in A$.
+                Assume $I$ is a proper initial segment of $T$. We have to show
+                that $g(I)$ selects the least strict upper bound of $I$ in $T$.
 
-            MISSING!!
+                MISSING!!
         \end{enumerate}
     \end{proof}
 \end{lemma}
