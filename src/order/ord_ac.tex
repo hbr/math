@@ -221,7 +221,7 @@ empty i.e. a strict upper bound exists.
 
     \begin{proof}
         We have to prove that $U$ is a chain and for all proper initial segments
-        $A \subset U$ of $U$ the upper bound choice function applied to the
+        $I \subset U$ of $U$ the upper bound choice function applied to the
         initial segment $g(I)$ selects the least strict upper bound of $I$ in
         $U$.
 
@@ -241,10 +241,42 @@ empty i.e. a strict upper bound exists.
 
             \item Strict lower bound selected:
 
-                Assume $I$ is a proper initial segment of $T$. We have to show
-                that $g(I)$ selects the least strict upper bound of $I$ in $T$.
+                Assume $I$ is a proper initial segment of $U$ and $z \in U - I$.
+                We have to show that $g(I)$ selects the least strict upper bound
+                of $I$ in $U$ i.e. $g(I) \le z$.
 
-                MISSING!!
+                Since $U$ is the union of all towers there exists a tower $B$
+                with $z \in B$.
+
+                First we show that $I$ is an initial segment of $B$:
+                \begin{enumerate}
+                    \item $I \subseteq B$: Assume $x \in I$. We have to show
+                        that $x \in B$.
+
+                        There exists another tower $C$ with $x \in C$. According
+                        to the comparability lemma~\ref{thmTowersComparable}
+                        either $B$ is an initial segment of $C$ or $C$ is an
+                        initial segment of $B$.
+
+                        In the first case $x \in B$ is trivially valid.
+
+                        If $B$ is an initial segment of $C$ then $z \in C$ is
+                        valid. Since $x < z$ the element $x$ has to be in $B$.
+
+                    \item Assume $x \in I$, $y \le x$ and $y \in B$. We have to
+                        show $y \in I$.
+
+                        Since $B \subseteq U$ and $I$ we have $y \in U$.
+                        Furthermore $I$ an initial segment of $U$ an by
+                        definition of an initial segment~\ref{defInitialSegment}
+                        we have $y \in I$.
+                \end{enumerate}
+
+                Next we have to prove the $g(I)$ is the least strict upper bound
+                of $I$ in $U$ i.e. $g(I) \le z$. We know already that $B$ is a
+                tower contained in $U$, $I$ is a proper initial segment of $B$
+                and $z \in B$. By definition of a tower~\ref{defTower} $g(I) \le
+                z$ is valid.
         \end{enumerate}
     \end{proof}
 \end{lemma}
