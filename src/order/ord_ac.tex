@@ -280,3 +280,41 @@ empty i.e. a strict upper bound exists.
         \end{enumerate}
     \end{proof}
 \end{lemma}
+
+
+
+
+\begin{theorem}
+    \label{thmZornLemma}
+    \emph{In a partial order $(P, \le)$ with choice function $f$ (and strict
+    upper bound choice function $g$) Zorn's lemma is valid. The lemma says:
+    If every chain has an upper bound then there exist a maximal element
+    of the set $P$.}
+
+
+    \begin{proof}
+        We assume that every chain has an upper bound. Let $U$ be the union of
+        all towers~\ref{defTower} which is by~\ref{thmTowerUnion} itself a tower
+        and $x$ be an upper bound of $U$.
+
+        \begin{enumerate}
+            \item A strict upper bound of $U$ does not exist: Assume there exist
+                strict upper bounds. $U$ is a proper initial segment of $U \cup
+                \set{g(U)}$ i.e. $U \cup \set{g(U)}$ is a tower. This contradicts
+                the fact that $U$ is the union of all towers.
+
+            \item $x$ is the maximum of $U$: Since no strict upper bound of $U$
+                exists and $x$ is an upper bound, $x \in U$ must be valid. I.e.
+                $x$ is the maximum of $U$ by definition of a maximum.
+
+            \item $x$ is a maximal element of the partially ordered set $P$: We
+                have to show for all $y \in P$ with $x \le y$ the validity of $x
+                = y$.
+
+                We distinguish the cases $x = y$ and $x < y$. In the first case
+                the goal is trivially valid. The second case leads to a
+                contradiction because $y$ would be  a strict upper bound of $U$
+                which cannot exist.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
