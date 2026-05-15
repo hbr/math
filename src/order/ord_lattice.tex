@@ -312,11 +312,13 @@ there is no least upper bound $c \lor d$.
 \begin{theorem}
     \label{thmChainsAreDistributive}
     %--------------------------------------------------
-    \emph{All chain lattices are distributive.}
+    \emph{All chains are distributive lattices.}
 
     \begin{proof}
-        The join of two elements is their maximum, the meet of two elements is
-        their minimum. We have to prove
+        Let $(P, \le)$ be a chain. I.e. for all $a,b \in P$ we have either $a
+        \le b$ or $b \le a$. In a chain
+        the join of two elements is their maximum, the meet of two elements is
+        their minimum. For distributivity we have to prove
         $$
             max(a, min(b, c)) = min(max(a,b), max(a,c))
         $$
@@ -947,7 +949,7 @@ lattice can grow upwards arbitrarily, but not downwards and not in width.
 %================================================================================
 
 Birkhoff's representation theorem is one of the crown juwels of lattice theory.
-It establishes a prefect duality between lattices satisfying the descending
+It establishes a perfect duality between lattices satisfying the descending
 chain condition and partial orders satisfying DCC. Note that finite lattices or
 finite partial order always satisfy DCC.
 
@@ -996,7 +998,7 @@ isomorphism i.e. it is bijective, order preserving and preserves all meets and j
 
     \begin{proof}
         We have to prove that $\phi$ is bijective (injective and surjective),
-        preserves the order and presverves the joins and meets.
+        preserves the order and preserves the joins and meets.
 
         \begin{enumerate}
             \item $\phi$ is injective:
