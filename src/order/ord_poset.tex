@@ -41,18 +41,110 @@
 \begin{definition}
     \label{defPoset}
     %------------------
-    The pair $(S, \le)$ of a set $S$ and a relation $\le$ is called a
-    \emph{partial order}
-    %-------------------
-    if the relation is
+    We give two definitions of a partially ordered set and show that both
+    definitions are equivalent.
+
     \begin{enumerate}
-        \item reflexive: $x \le x$
+        \item
+            The pair $(P, \le)$ of a set $P$ and a binary relation $\le$ is
+            called a
+            \emph{partial order}
+            %-------------------
+            if the relation $\le$ is
+            \begin{enumerate}
+                \item reflexive: $x \le x$
 
-        \item antisymmetric: $x \le y \land y \le x \implies x = y$
+                \item antisymmetric: $x \le y \land y \le x \implies x = y$
 
-        \item transitive $x \le y \land y \le z \implies x \le z$
+                \item transitive $x \le y \land y \le z \implies x \le z$
+            \end{enumerate}
+            for all $x, y, z \in P$. The corresponding strict order relation is
+            defined by
+            $$
+                x < y := x \le y \land x \ne y
+            $$
+
+        \item The pair $(P, <)$ of a set $P$ and a binary relation $<$ is called
+            a \emph{strict partial order} if the relation $<$ is
+            \begin{enumerate}
+                \item transitive: $x < y \land y < z \implies y < z$
+                \item irreflexive: $\not x < x$
+            \end{enumerate}
+            for all $x, y, z \in P$. The corresponding non strict order
+            relation is defined by
+            $$
+                x \le y := x < y \lor x = y
+            $$
     \end{enumerate}
-    for all $x, y, z \in S$.
+
+    \begin{proof}
+        \begin{itemize}
+            \item $1 \implies 2$: We have to show that the corresponding strict
+                order relation is irreflexive and transitive.
+
+                \begin{enumerate}
+                    \item irreflexive: We assume $x < x$ and derive a
+                        contradiction. By definition $x < x$ is equivalent to $x
+                        \le x \land x \ne x$ where the contradiction is obvious.
+
+                    \item transitive: We assume $x < y$ and $y < z$ and have to
+                        show $x < z$ which by definition is satisfied by $x \le
+                        z$ and $x \ne z$.
+
+                        Expanding the definition of $<$ we get $x \le y$, $x \ne
+                        y$, $y \le z$, $y \ne z$. Transitivity of $\le$ leads to
+                        $x \le z$.
+
+                        It remains to show $x \ne z$. We assume $x = z$. This
+                        leads to $y \le x$ using $y \le z$. By antisymmetry we
+                        get $x = y$ which contradicts the assumption $x < y$.
+                \end{enumerate}
+
+            \item $2 \implies 1$: We have to show that the corresponding
+                non strict order relation is reflexive, antisymmetric and
+                transitive.
+
+                \begin{enumerate}
+                    \item reflexive: Obvious by definition of the non strict
+                        order relation.
+
+                    \item antisymmetric: We assume $x \le y$ and $y \le x$ and
+                        have to show $x = y$. By assumption we have $x < y \lor
+                        x = y$ and $y < x \lor y = x$. We have to distinguish 4
+                        cases:
+                        \begin{itemize}
+                            \item $x < y$ and $y < x$: This case is impossible
+                                because $<$ is transitive leading to $x < x$
+                                which is impossible because $<$ is
+                                irreflexive.
+
+                            \item $x < y$ and $y = x$: This implies $x < x$
+                                which is impossible because of irreflexivity.
+
+                            \item $x = y$ and $y < x$: Some as before.
+
+                            \item $x = y$ and $y = x$: Trivial.
+                        \end{itemize}
+
+                    \item transitive: We assume $x \le y$ and $y \le z$ and have
+                        to show $x \le z$. We expand the definitions of the
+                        assumptions and have to analyze 4 cases:
+                        \begin{itemize}
+                            \item $x < y$ and $y < z$: By transitivity of $<$ we
+                                have $x < z$ which satisfies $x \le z$ by
+                                definition.
+
+                            \item $x < y$ and $y = z$: We have $x < z$ which
+                                satisfies $x \le z$ by definition.
+
+                            \item $x = y$ and $y < z$: Same as previous case.
+
+                            \item $x = y$ and $y = z$: $x \le z$ is trivially
+                                satisfied.
+                        \end{itemize}
+                \end{enumerate}
+        \end{itemize}
+    \end{proof}
 \end{definition}
 
 
