@@ -989,8 +989,11 @@ isomorphism i.e. it is bijective, order preserving and preserves all meets and j
         condition, $J(L) \subseteq L$ the join irreducible elements of the
         lattice $L$. $L$ imposes a partial order on $J(L)$. Let $O(J(L))$ be
         the set of lower sets and
-        $\phi: L \to O_f(J(L))$ be a map defined as $\phi(a) := \set{p \in J(L):
-        p \le a}$.  Then $\phi$ is a lattice isomorphism when the codmain of
+        $\phi: L \to O_f(J(L))$ be a map defined as
+        %
+        $\phi(a) := \set{p \in J(L): p \le a}$.
+        %
+        $\phi$ is a lattice isomorphism when the codmain of
         $\phi$ is restricted to finitely generated lower sets i.e. elements of
         $O(J(L))$ which have the form $\downclosed F$ where $F$ is a finite set
         of join irreducibles.
@@ -1044,18 +1047,38 @@ isomorphism i.e. it is bijective, order preserving and preserves all meets and j
                 i.e. both sets are equivalent.
 
 
-            \item $\phi$ preserves order:
+            \item $\phi$ preserves order: We assume $a \le b$ for some $a, b \in
+                L$ and have to show $\phi(a) \subseteq \phi(b)$. Assume $p \in
+                \phi(a)$. By definition of $\phi$ we have $p \in J(L)$ and $p
+                \le a$. Since $a \le b$ we have $p \le b$ as well by
+                transitivity. Therefore $p \in \phi(b)$.
 
-                MISSING
+            \item $\phi$ preserves joins: Assume $c = a \join b$ for some $a, b,
+                c \in L$. We have to show $\phi(c) = \phi(a) \cup \phi(b)$.
 
-            \item $\phi$ preserves joins:
+                Forward direction: Say $p \in \phi(c)$ i.e. $p \in J(L)$ and $p
+                \le c$ (i.e. $p \le a \join b$). The lattice is distributive
+                therefore
+                by~\ref{thmDistributiveJoinIrreducibleIsJoinPrime} all join
+                irreducibles are join prime. Therefore $p \le a$ or $p \le b$
+                is valid. This implies $p \in \phi(a)$ or $p \in \phi(b)$.
 
-                MISSING
+                Backward direction: Say $p \in \phi(a)$ or $p \in \phi(b)$. We
+                have to show $p \in \phi(c)$. Assume $p \in \phi(a)$ i.e. $p \in
+                J(L)$ and $p \le a$. Since $c$ is an upper bound of $a$ and $b$
+                we have $p \le c$, therefore $p \in \phi(c)$.
 
-            \item $\phi$ preserves meets:
+            \item $\phi$ preserves meets: We have to show $\phi(a \meet b) =
+                \phi(a) \cap \phi(b)$.
 
-                MISSING
+                Forward direction: Assume $p \in \phi(a \meet b)$. This implies
+                $p \in J(L)$, $p \le a$ and $p \le b$. Therefore $p$ is in
+                $\phi(a)$ and in $\phi(b)$.
 
+                Backward direction: Assume $p \in \phi(a) \cap \phi(b)$. This
+                implies $p \in j(L)$, $p \le a$ and $p \le b$ i.e. $p$ is a
+                lower bound of $a$ and $b$. Therefore $p \le a \meet b$ (which
+                is the greatest lower bound) and $p \in \phi(a \meet b)$.
         \end{enumerate}
     \end{proof}
 \end{theorem}
