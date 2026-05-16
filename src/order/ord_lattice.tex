@@ -1139,6 +1139,37 @@ bijective, order preserving and preserves all meets and joins.
 \end{theorem}
 
 
+\paragraph{Why the restriction to finitely generated lower sets is important:}
+For finite lattices the restriction is trivial because all lower sets are finite
+aka finitely generated. The picture changes if we allow infinite sets. Consider
+the set
+$$
+    \Nat \cup \set{\infty} = \set{0,1,2,3, \ldots, \infty}
+$$
+This set with the usual order is a distributive lattice satisfying the
+descending chain condition. The set of join irreducibles is
+$$
+    P := \set{1,2,3,\ldots, \infty}
+$$
+The lattice of finitely generated lower sets of $P$ consists of
+$$
+    \emptyset, \downclosed\set{1}, \downclosed\set{2}, \downclosed\set{3},
+    \ldots, \downclosed\set{\infty}
+$$
+which is according to Birkhoff's theorem isomorphic to the original lattice
+$\set{0,1,2,3,\ldots,\infty}$. However the lattice of all possible lower sets of
+$P$ includes the set
+$$
+    \set{1,2,3,\ldots}
+$$
+without the infinity element. Obviously this lower set is not finitely
+generated and there is no corresponding element in the origial
+lattice.
+
+This counterexamples shows that without the restriction to finitely generated
+lower sets the mapping $\phi$ in Birkhoff's representation theorem is not
+surjective and therefore not an isomorphism.
+
 
 \paragraph{Example Project Tasks}. Assume we have 3 tasks $A$, $B$ and $C$ where
 $A$ must be done before $B$ and $C$ can be done in parallel. The dependency
