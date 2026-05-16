@@ -994,9 +994,19 @@ lattice can grow upwards arbitrarily, but not downwards and not in width.
 %================================================================================
 
 Birkhoff's representation theorem is one of the crown juwels of lattice theory.
-It establishes a perfect duality between lattices satisfying the descending
-chain condition and partial orders satisfying DCC. Note that finite lattices or
-finite partial order always satisfy DCC.
+It establishes a perfect duality between distributive lattices satisfying the
+descending chain condition and partial orders satisfying DCC. Note that finite
+lattices or finite partial order always satisfy DCC.
+
+Birkhoff’s Theorem tells us that a finite distributive lattice and a finite
+poset are essentially the same amount of information, just "packaged"
+differently:
+
+If you give me a poset, I can build a distributive lattice (by taking its lower
+sets).
+
+If you give me a distributive lattice, I can find the poset (by looking at its
+join-irreducibles).
 
 In theorem~\ref{thmDistributiveDCCUniqueJoin} we have seen that the join
 irreducibles in a distributive lattice satisfying DCC are sufficient to generate
@@ -1018,10 +1028,10 @@ L \to O(J(L))$ as
 $$
     \phi(a) := \set{p \in J(L): p \le a}
 $$
-By definition the set $\phi(a)$ is a lower set i.e. with each join
-irreducible element it contains all join irreducibles below it. Birkhoff's
-representation theorem states that $\phi: L \to O(J(L))$ is a lattice
-isomorphism i.e. it is bijective, order preserving and preserves all meets and joins.
+By definition the set $\phi(a)$ is a lower set i.e. with each join irreducible
+element it contains all join irreducibles below it. Birkhoff's representation
+theorem states that $\phi: L \to O(J(L))$ is a lattice isomorphism i.e. it is
+bijective, order preserving and preserves all meets and joins.
 
 
 
@@ -1141,6 +1151,14 @@ graph is a poset with the Hasse diagram
     };
 \end{tikzpicture}
 
+\noindent Note that $A$, $B$ and $C$ represent the accomplishment of the tasks
+and not the tasks as processes. The dependency graph says \emph{I cannot finish
+$B$ before $A$ has been finished}.
+
+We regard the dependency graph as the partial order of the join irreducibles.
+The graph is finite and therefore the partial order satisfies the descending
+chain condition.
+
 Now let us look at all possible lower sets of this partial order.
 
 \begin{itemize}
@@ -1182,3 +1200,39 @@ We can draw the lattice of the lower sets.
         C -- AC
     };
 \end{tikzpicture}
+
+\noindent This lattice represents all the states of the system. According to
+Birkhoff's theorem this lattice is isomorphic to a lattice which contains
+elements of the dependency graph as join irreducibles. In the following picture
+we see the lattice with its join irreducibles highlighted in boldface.
+
+\begin{tikzpicture}
+    \graph[grow up, branch right=2cm] {
+        empty/$0$ [xshift=2cm]
+        --
+        {
+            {
+                A/$\mathbf A$ [xshift=1cm]
+                --
+                {
+                    AB/$\mathbf B$,
+                    AC/AC
+                }
+                --
+                ABC/ABC [xshift=1cm]
+            },
+            C/$\mathbf C$
+        },
+        C -- AC
+    };
+\end{tikzpicture}
+
+\noindent $A$, $B$ and $C$ are join irreducible, the bottom element is never
+join irreducible, the elements AC and ABC can be reached via joins of other
+elements.
+
+Even in this small example we see that the partial order reduced to the join
+irreducibles contains all relevant information. There are only 3 join
+irreducible elements. The whole state space has 6 elements. In real world
+examples the partial order of join irreducibles can be handled easily, the state
+space might grow exponential.
